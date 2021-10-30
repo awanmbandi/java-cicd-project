@@ -18,7 +18,7 @@
     <mirror>
       <id>nexus</id>
       <name>nexus</name>
-        <url>http://184.73.13.200:8081/repository/maven_project/</url>
+        <url>http://54.226.123.168:8081/repository/maven_project/</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
   </mirrors>
