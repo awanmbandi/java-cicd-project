@@ -71,11 +71,11 @@
   <distributionManagement>
     <repository>
       <id>nexus-releases</id>
-      <url>http://172.31.84.16:8081/repository/maven-releases/</url>
+      <url>http://NEXUS_ARTIFACTORY_IP_ADDRESS:NEXUS_PORT_NUMBER/repository/NEXUS_RELEASE_REPOSITORY/</url>
     </repository>
     <snapshotRepository>
       <id>nexus-snapshots</id>
-      <url>http://172.31.84.16:8081/repository/maven-snapshots/</url>
+      <url>http://NEXUS_ARTIFACTORY_IP_ADDRESS:NEXUS_PORT_NUMBER/repository/NEXUS_SNAPSHOT_REPOSITORY/</url>
     </snapshotRepository>
   </distributionManagement>
 
