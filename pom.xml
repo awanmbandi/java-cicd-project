@@ -2,17 +2,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.example</groupId>
   <artifactId>ecommerce-webapp</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
+
   <name>E-Commerce WebApp</name>
   <description>Simple JSP/Servlet E-commerce demo packaged as WAR for Tomcat</description>
+
   <properties>
-    <maven.compiler.release>11</maven.compiler.release>
+    <!-- Change this if your JDK is 11+ -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -26,17 +32,22 @@
       <version>1.2</version>
     </dependency>
   </dependencies>
+
   <build>
     <finalName>webapp</finalName>
     <plugins>
+      <!-- Compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
         <configuration>
-          <release>${maven.compiler.release}</release>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
+
+      <!-- WAR plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -46,6 +57,26 @@
           <warSourceDirectory>src/main/webapp</warSourceDirectory>
         </configuration>
       </plugin>
+
+      <!-- Deploy plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.1</version>
+      </plugin>
     </plugins>
   </build>
+
+  <!-- Nexus/Artifactory repo info -->
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://your-nexus-server:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://your-nexus-server:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 </project>
