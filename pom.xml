@@ -2,38 +2,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.example</groupId>
   <artifactId>ecommerce-webapp</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-
   <name>E-Commerce WebApp</name>
   <description>Simple JSP/Servlet E-commerce demo packaged as WAR for Tomcat</description>
-
   <properties>
     <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
   </properties>
-
   <dependencies>
-    <!-- Provided by Tomcat (Servlet 4.0, javax.*) -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
-
-    <!-- JSTL for JSP -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
   </dependencies>
-
   <build>
     <finalName>webapp</finalName>
     <plugins>
@@ -45,7 +37,6 @@
           <release>${maven.compiler.release}</release>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
