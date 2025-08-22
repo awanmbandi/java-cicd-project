@@ -2,13 +2,13 @@
   <servers>
     <server>
       <id>nexus-releases</id>
-      <username>admin</username>
-      <password>admin</password>
+      <username>USER_NAME</username>
+      <password>USER_PASSWORD</password>
     </server>
     <server>
       <id>nexus-snapshots</id>
-      <username>admin</username>
-      <password>admin123</password>
+      <username>USER_NAME</username>
+      <password>USER_PASSWORD</password>
     </server>
   </servers>
 </settings>
