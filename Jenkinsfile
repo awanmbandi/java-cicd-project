@@ -1,59 +1,48 @@
 pipeline {
-  agent any
-  environment {
-    WORKSPACE = "${env.WORKSPACE}"
-  }
-  tools {
-    maven 'localMaven'
-    jdk 'localJdk'
-  }
+  agent any // This specifies that the pipeline can run on any available agent
   stages {
-    stage('Build') {
-      steps {
-        sh 'mvn clean package'
-      }
-      post {
-        success {
-          echo ' now Archiving '
-          archiveArtifacts artifacts: '**/*.war'
+    stage('Validate Project') {
+        steps {
+            sh 'mvn validate'
+        }
+    }
+    stage('Unit Test'){
+        steps {
+            sh 'mvn test'
+        }
+    }
+    stage('App Packaging | Build'){
+        steps {
+            sh 'mvn package'
+        }
+    }
+    stage('Integration Test'){
+        steps {
+            sh 'mvn verify -DskipUnitTests'
+        }
+    }
+    stage ('Checkstyle Code Analysis'){
+        steps {
+            sh 'mvn checkstyle:checkstyle'
+        }
+    }
+    stage('SonarQube Inspection') {
+        steps {
+            sh  """mvn sonar:sonar \
+                    -Dsonar.projectKey=ecom-java-webapp \
+                    -Dsonar.host.url=http://98.81.117.236:9000 \
+                    -Dsonar.login=8d6d6668c3958ff1327fe91196f88999b450a4a6"""
+        }
+    } 
+    stage("Upload Artifact To Nexus"){
+        steps{
+             sh 'mvn deploy'
+        } 
+        post {
+            success {
+              echo 'Successfully Uploaded Artifact to Nexus Artifactory'
         }
       }
     }
-    stage('SonarQube Scan') {
-      steps {
-        sh """mvn sonar:sonar \
-  -Dsonar.host.url=http://3.92.207.116:9000 \
-  -Dsonar.login=65b6eda968b1b45da8020c73bbdc75d9738f551b"""
-      }
-    }
-    stage('Upload to Artifactory') {
-      steps {
-        sh "mvn clean deploy -DskipTests"
-      }
-
-    }
-    stage('Deploy to DEV') {
-      environment {
-        HOSTS = "dev"
-      }
-      steps {
-        sh "ansible-playbook ${WORKSPACE}/deploy.yaml --extra-vars \"hosts=$HOSTS workspace_path=$WORKSPACE\""
-      }
-
-    }
-    stage('Approval') {
-      steps {
-        input('Do you want to proceed?')
-      }
-    }
-    stage('Deploy to PROD') {
-      environment {
-        HOSTS = "prod"
-      }
-      steps {
-        sh "ansible-playbook ${WORKSPACE}/deploy.yaml --extra-vars \"hosts=$HOSTS workspace_path=$WORKSPACE\""
-      }
-    }
   }
-
 }
